@@ -1,39 +1,44 @@
-class student{
-  private int rollNo;
-  private String name;
-// default constructor
-Student () {
-  roll No = 0;
-  name = "Unknown";
+class Student {
+    private String name;
+    private int age;
+
+    Student() {
+        name = "Unknown";
+        age = 0;
+    }
+
+    Student(String n, int a) {
+        setName(n);
+        setAge(a);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String n) {
+        if (n != null && !n.isEmpty())
+            name = n;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int a) {
+        if (a > 0)
+            age = a;
+    }
 }
-// Parameterized constructor
-Student(int r, String n) {
-  setRollNo(r);
-  setName(n);
-}
-  // getter and setter
-  public int getRollNo() {
-    return rollNo;
-  }
-  public void setRollNo(int r) {
-    if (r> 0) rollNo = r;
-  }
-  public String getName() {
-    return name;
-  }
-  public void setName(String n) {
-    if (n != null && !n.trim().isEmpty())
-      name = n;
-  }
-  void display() {
-    System.out.println(rollNo + " "+ name);
-  }
-  public static void main(String[] args) {
-    Student s1 = new Student();
-    Student s2 = new Student(101, " Riya");
-    s1.display();
-    s2.display();
-  }
+
+public class Main {
+    public static void main(String[] args) {
+        Student s1 = new Student();
+        Student s2 = new Student("Rahul", 20);
+
+        System.out.println(s1.getName() + " " + s1.getAge());
+        System.out.println(s2.getName() + " " + s2.getAge());
+    }
 }
 
 
