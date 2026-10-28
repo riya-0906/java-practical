@@ -1,73 +1,46 @@
-
-package bank;
-
-import java.util.Scanner;
-
-// Custom exception
-class InsufficientBalanceException extends Exception {
-    InsufficientBalanceException(String msg) {
+class InvalidAmountException extends Exception {
+    InvalidAmountException(String msg) {
         super(msg);
     }
 }
 
-class Account {
+class BankAccount {
     static String bankName = "ABC Bank";
-    private final int accountNo;
     private double balance;
+    final int accountNo;
 
-    Account(int accountNo, double balance) {
-        this.accountNo = accountNo;
+    BankAccount(int no, double balance) {
+        accountNo = no;
         this.balance = balance;
     }
 
-    // Static method
     static void showBank() {
-        System.out.println("Bank: " + bankName);
+        System.out.println(bankName);
     }
 
-    // Final method
-    final void showAccount() {
-        System.out.println("Account No: " + accountNo);
-        System.out.println("Balance: Rs. " + balance);
-    }
-
-    void withdraw(double amount)
-            throws InsufficientBalanceException {
+    void deposit(double amount) throws InvalidAmountException {
         if (amount <= 0)
-            throw new IllegalArgumentException(
-                "Amount must be positive");
-        if (amount > balance)
-            throw new InsufficientBalanceException(
-                "Insufficient balance");
+            throw new InvalidAmountException("Invalid amount!");
+        balance += amount;
+    }
 
-        balance -= amount;
-        System.out.println("Withdrawal successful.");
+    final void showBalance() {
+        System.out.println("Balance: " + balance);
     }
 }
 
 public class Main {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        Account a = new Account(101, 5000);
+        BankAccount.showBank();
+        BankAccount a = new BankAccount(101, 1000);
 
         try {
-            Account.showBank();
-            a.showAccount();
-
-            System.out.print("Enter withdrawal amount: ");
-            double amount = sc.nextDouble();
-
-            a.withdraw(amount);
-            a.showAccount();
-        } catch (InsufficientBalanceException e) {
+            a.deposit(-500);
+        } catch (InvalidAmountException e) {
             System.out.println(e.getMessage());
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        } catch (java.util.InputMismatchException e) {
-            System.out.println("Invalid input! Enter a number.");
         } finally {
-            sc.close();
-            System.out.println("Transaction process completed.");
+            a.showBalance();
+            System.out.println("Transaction completed.");
         }
     }
 }
